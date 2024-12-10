@@ -32,7 +32,7 @@ const onSelect: MenuProps['onSelect'] = ({ key }) => {
       router.push({ name: 'Lijun' }); // 使用路由名称进行跳转
       break;
     case 'test':
-      router.push({ name: 'Test' }); // 使用路由名称进行跳转
+      router.push({ name: 'Test' });
       break;
   }
 };
