@@ -5,8 +5,13 @@ const router = createRouter({
   routes: [
     {
       path: '/lijun',
-      name: 'lijun',
-      component: () => import('../views/lijun.vue'),
+      name: 'Lijun',
+      component: () => import('@/views/LiJun.vue'),
+    },
+    {
+      path: '/test',
+      name: 'Test',
+      component: () => import('@/views/Test.vue'),
     },
   ],
 })
