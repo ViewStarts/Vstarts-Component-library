@@ -15,8 +15,8 @@ const current = ref<string[]>(['lijun']); //默认是第一个
 const items = ref<MenuProps['items']>([
   {
     key: 'lijun',
-    label: '李骏开发中',
-    title: '李骏开发中',
+    label: 'lijun开发中',
+    title: 'lijun开发中',
   },
   {
     key: 'test',
