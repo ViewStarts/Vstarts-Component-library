@@ -59,7 +59,7 @@ pnpm docs:dev
 
 这将会启动一个本地服务器，使你可以在浏览器中预览组件库的开发指南。任何对文档的更改都会自动刷新页面，以便立即看到效果。
 
-你也可以直接访问https://viewstarts.github.io/View-ui/,来在线查看组件库的开发指南。
+你也可以直接访问https://viewstarts.github.io/View-ui/ ,来在线查看组件库的开发指南。
 
 ## **重要提示**
 
