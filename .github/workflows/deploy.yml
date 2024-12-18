@@ -1,0 +1,31 @@
+name: Deploy VitePress Docs to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main # 如果你的默认分支不是main，请修改为对应的分支名
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20' # 使用与项目兼容的Node版本
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile # 如果你使用pnpm，则改为 pnpm install --frozen-lockfile
+
+      - name: Build VitePress site
+        run: npm run build # 根据你的package.json，这会调用"vitepress build"
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs/.vitepress/dist # VitePress的输出目录

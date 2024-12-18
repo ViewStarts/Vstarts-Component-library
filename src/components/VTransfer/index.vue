@@ -14,25 +14,54 @@
             :key="item.id"
             :class="['list-item', item.disabled ? 'disabled' : '']"
           >
-            <input type="checkbox" :disabled="item.disabled" :id="'_checkbox_' + item.id" />
+            <input
+              type="checkbox"
+              :disabled="item.disabled"
+              :id="'_checkbox_' + item.id"
+              @click="setCheckedData(($event.target as HTMLInputElement).checked, 'left', item)"
+            />
             <label :for="'_checkbox_' + item.id">{{ item.phone_name }}</label>
           </div>
         </div>
       </div>
       <div class="box button-group">
-        <button>&lt;</button>
-        <button>&gt;</button>
+        <button
+          :disabled="transferButtonDisabled.left"
+          @click="removeRightListData(CheckedData.right)"
+        >
+          &lt;
+        </button>
+        <button
+          :disabled="transferButtonDisabled.right"
+          @click="addRightListData(CheckedData.left)"
+        >
+          &gt;
+        </button>
       </div>
       <div class="box right-list">
         <h1 class="list-title">{{ rightTitle }}</h1>
-        <div></div>
+        <div>
+          <div
+            v-for="item in rightListData"
+            :key="item.id"
+            :class="['list-item', item.disabled ? 'disabled' : '']"
+          >
+            <input
+              type="checkbox"
+              :disabled="item.disabled"
+              :id="'_checkbox_' + item.id"
+              @click="setCheckedData(($event.target as HTMLInputElement).checked, 'right', item)"
+            />
+            <label :for="'_checkbox_' + item.id">{{ item.phone_name }}</label>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { useTargetIndex, useComputedData, userightListData } from './module/hooks'
+import { useTargetIndex, useComputedData, userightListData, useCheckedData } from './module/hooks'
 
 // 父传子
 const props = defineProps({
@@ -51,12 +80,19 @@ const options = props.data.map(({ title }: any) => title)
 
 // 解构事件
 const [targetIndex, setTargetIndex] = useTargetIndex(0)
+const [CheckedData, addCheckedData, removeCheckedData] = useCheckedData()
+const [rightListData, addRightListData, removeRightListData] = userightListData([], CheckedData)
+const { leftTitle, leftListData, transferButtonDisabled } = useComputedData(
+  props.data,
+  targetIndex,
+  rightListData,
+  CheckedData,
+)
 
-const [rightListData, addRightListData, removeRightListData] = userightListData([])
-
-const { leftTitle, leftListData } = useComputedData(props.data, targetIndex, rightListData)
+const setCheckedData = (checked: any, leftOrRight: any, item: any) => {
+  checked ? addCheckedData(leftOrRight, item) : removeCheckedData(leftOrRight, item.id)
+}
 </script>
-
 <style scoped lang="scss">
 .transfer {
   display: flex;
